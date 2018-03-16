@@ -1,0 +1,26 @@
+.swipe-box {
+    display: block;
+    width: 100%;
+    float: left;
+    margin: 0;
+    transform: .5s ease .1s;
+}
+
+.ctn {
+    max-width: 400px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.inner-ctn {
+  margin: 20px;
+  padding: 20px;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
