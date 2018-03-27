@@ -58,6 +58,7 @@ export class AuthService {
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
+        console.log('result: ', result);
         this.store.dispatch(new UI.StopLoading());
       })
       .catch(error => {
@@ -71,7 +72,7 @@ export class AuthService {
   }
 
   private addDataToDatabase(user: User) {
-    this.db.collection('users').add(user);
+    this.db.collection('users').doc(user.userId).set(user);
   }
 
 }
