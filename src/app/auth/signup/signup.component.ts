@@ -32,7 +32,8 @@ export class SignupComponent implements OnInit {
       email: form.value.email,
       password: form.value.password,
       name: form.value.name,
-      role: form.value.role
+      role: form.value.role,
+      userId: ''
     });
   }
 

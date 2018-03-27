@@ -33,18 +33,18 @@ export class AuthService {
     });
   }
 
-  registerUser(authData: AuthData) {
+  registerUser(user: User) {
     this.store.dispatch(new UI.StartLoading());
     this.afAuth.auth
-      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .createUserWithEmailAndPassword(user.email, user.password)
       .then(result => {
-        console.log('result: ', result);
         this.store.dispatch(new UI.StopLoading());
         this.addDataToDatabase({
           userId: result.uid,
-          name: authData.name,
-          role: authData.role,
-          email: authData.email
+          name: user.name,
+          role: user.role,
+          email: user.email,
+          password: user.password
         });
       })
       .catch(error => {
