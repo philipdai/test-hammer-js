@@ -1,42 +1,25 @@
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-} from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './app.reducer';
+import { MaterialModule } from './material.module';
 
 import { AppComponent }   from './app.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { AuthService } from './auth/auth.service';
+
+import { UIService } from './shared/ui.service';
+import { AuthModule } from './auth/auth.module';
+import { environment } from '../environments/environment';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = <any>{
@@ -45,13 +28,35 @@ export class MyHammerConfig extends HammerGestureConfig  {
 }
 
 @NgModule({
-  imports:      [ BrowserModule, MatTableModule, ],
-  declarations: [ AppComponent ],
+  imports:      [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    AppRoutingModule,
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AuthModule,
+    AngularFirestoreModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 20 // number of states to retain
+    })
+  ],
+  declarations: [
+    AppComponent,
+    WelcomeComponent,
+    HeaderComponent,
+    SidenavListComponent
+  ],
   bootstrap:    [ AppComponent ],
-  providers:    [ {
-                    provide: HAMMER_GESTURE_CONFIG,
-                    useClass: MyHammerConfig
-                } ]
+  providers:    [
+    AuthService,
+    UIService,
+    {
+        provide: HAMMER_GESTURE_CONFIG,
+        useClass: MyHammerConfig
+    }
+  ]
 })
 
 export class AppModule { }

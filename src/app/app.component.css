@@ -1,26 +1,7 @@
-.swipe-box {
-    display: block;
-    width: 100%;
-    float: left;
-    margin: 0;
-    transform: .5s ease .1s;
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100%;
 }
 
-.ctn {
-    max-width: 400px;
-    margin: 0 auto;
-    height: 100%;
-}
-
-.inner-ctn {
-  margin: 20px;
-  padding: 20px;
-}
-
-.visible {
-    display: block;
-}
-
-.hidden {
-    display: none;
+mat-sidenav {
+  width: 250px;
 }

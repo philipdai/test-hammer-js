@@ -1,56 +1,11 @@
-<!-- <div class="ctn">
-  <div class="inner-ctn">
-    <h4 class="ui header medium center aligned">
-      Philip's Hammer JS Testing
-      <div class="sub header">(swipe left or right)</div>
-    </h4>
-    <div class="ui card swipe-box"
-      *ngFor="let avatar of avatars; let idx=index"
-      (swipeleft)="swipe(idx, $event.type)"
-      (swiperight)="swipe(idx, $event.type)"
-      [class.visible]="avatar.visible" [class.hidden]="!avatar.visible">
-      <div class="image">
-        <img [src]="avatar.image" [alt]="avatar.name">
-      </div>
-      <div class="content">
-        <a class="header">{{avatar.name}}</a>
-      </div>
-    </div>
-  </div>
-</div> -->
-<div class="example-container mat-elevation-z8"
-  (swipeleft)="swipeTable($event.type)"
-  (swiperight)="swipeTable($event.type)">
-  <mat-table #table [dataSource]="dataSource">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="role">
-      <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.role}} </mat-cell>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="giftPurchased" *ngIf="isShowLeft">
-      <mat-header-cell *matHeaderCellDef> Gift Purchased </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.giftPurchased}} </mat-cell>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="amount" *ngIf="isShowRight">
-      <mat-header-cell *matHeaderCellDef> Amount($) </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
-    </ng-container>
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="position" *ngIf="isShowRight">
-      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <app-sidenav-list (closeSidenav)="sidenav.close()"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
