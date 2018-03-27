@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 import { Store } from '@ngrx/store';
 import { User } from './user.model';
@@ -14,6 +15,7 @@ import * as Auth from './auth.actions';
 @Injectable()
 export class AuthService {
   constructor(private router: Router,
+    private db: AngularFirestore,
     private afAuth: AngularFireAuth,
     private uiService: UIService,
     private store: Store<fromRoot.State>
@@ -36,7 +38,14 @@ export class AuthService {
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
+        console.log('result: ', result);
         this.store.dispatch(new UI.StopLoading());
+        this.addDataToDatabase({
+          userId: result.uid,
+          name: authData.name,
+          role: authData.role,
+          email: authData.email
+        });
       })
       .catch(error => {
         this.store.dispatch(new UI.StopLoading());
@@ -59,6 +68,10 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
+  }
+
+  private addDataToDatabase(user: User) {
+    this.db.collection('users').add(user);
   }
 
 }
