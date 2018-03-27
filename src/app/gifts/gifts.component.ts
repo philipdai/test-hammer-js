@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { User } from '../auth/user.model';
+import * as fromAuth from '../auth/auth.reducer';
 
 export interface Element {
   giftPurchased: string;
@@ -36,8 +41,9 @@ const ELEMENT_DATA: Element[] = [
   styleUrls: ['./gifts.component.css']
 })
 export class GiftsComponent implements OnInit {
+  userLoggedIn$: Observable<User>;
 
-  constructor() { }
+  constructor(private store: Store<fromAuth.State>) { }
 
   isShowLeft = true;
   isShowRight = false;
@@ -72,6 +78,14 @@ export class GiftsComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.userLoggedIn$ = this.store.select(fromAuth.getUserLoggedIn);
+
+    this.userLoggedIn$.subscribe(user => {
+      if (user) {
+        console.log('user: ', user)
+      }
+    });
+
     if (this.isShowLeft) {
       this.displayedColumns = [ 'role', 'giftPurchased'];
     }
