@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { User } from './user.model';
+import { Wedding } from '../shared/models/wedding.model';
 import { AuthData } from './auth-data.model';
 
 import { UIService } from '../shared/ui.service';
@@ -64,6 +65,7 @@ export class AuthService {
         this.store.dispatch(new UI.StopLoading());
         this.store.dispatch(new Auth.SetUserIdLoggedIn(result.uid));
         this.getUser(result.uid);
+        this.getDefaultWedding(result.uid);
       })
       .catch(error => {
         this.store.dispatch(new UI.StopLoading());
@@ -74,14 +76,28 @@ export class AuthService {
   getUser(userId: string) {
     this.fbSubs.push(
       this.db
-      .collection('users')
-      .doc(userId)
-      .valueChanges()
-      .subscribe(user => {
-        this.store.dispatch(new Auth.SetUserLoggedIn(<User> user));
-      })
+        .collection('users')
+        .doc(userId)
+        .valueChanges()
+        .subscribe(user => {
+          this.store.dispatch(new Auth.SetUserLoggedIn(<User> user));
+        })
     )
+  }
 
+  getDefaultWedding(userId: string) {
+    this.fbSubs.push(
+      this.db
+        .collection('weddings', ref => {
+          return ref.where('isDefault', '==', true)
+            .where('ownerId', '==', userId)
+        })
+        .valueChanges()
+        .subscribe(weddings => {
+          console.log('weddings: ', weddings);
+          this.store.dispatch(new Auth.SetDefaultWedding(<Wedding> weddings[0]));
+        })
+    );
   }
 
   logout() {
@@ -91,10 +107,11 @@ export class AuthService {
   private addDataToDatabase(user: User) {
     this.db.collection('users').doc(user.userId).set(user);
     this.db.collection('weddings').add({
-      owner: user,
+      ownerId: user.userId,
       name: `${user.name}'s Wedding'`,
       active: true,
-      isDefault: true
+      isDefault: true,
+      users: [ user ]
     });
   }
 

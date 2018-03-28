@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { User } from '../auth/user.model';
+import { Wedding } from '../shared/models/wedding.model';
 import * as fromAuth from '../auth/auth.reducer';
 
 export interface Element {
@@ -42,6 +43,7 @@ const ELEMENT_DATA: Element[] = [
 })
 export class GiftsComponent implements OnInit {
   userLoggedIn$: Observable<User>;
+  defaultWedding$: Observable<Wedding>;
 
   constructor(private store: Store<fromAuth.State>) { }
 
@@ -79,12 +81,14 @@ export class GiftsComponent implements OnInit {
 
   ngOnInit() {
     this.userLoggedIn$ = this.store.select(fromAuth.getUserLoggedIn);
+    this.defaultWedding$ = this.store.select(fromAuth.getDefaultWedding);
 
     this.userLoggedIn$.subscribe(user => {
       if (user) {
         console.log('user: ', user)
       }
     });
+
 
     if (this.isShowLeft) {
       this.displayedColumns = [ 'role', 'giftPurchased'];
