@@ -111,7 +111,7 @@ export class AuthService {
       name: `${user.name}'s Wedding'`,
       active: true,
       isDefault: true,
-      users: [ user ]
+      users: {[user.userId]: user}
     });
   }
 
