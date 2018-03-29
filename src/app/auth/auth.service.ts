@@ -89,8 +89,7 @@ export class AuthService {
     this.fbSubs.push(
       this.db
         .collection('weddings', ref => {
-          return ref.where('isDefault', '==', true)
-            .where('ownerId', '==', userId)
+          return ref.where(`usersSetDefault.${userId}`, '==', true)
         })
         .valueChanges()
         .subscribe(weddings => {
@@ -110,7 +109,7 @@ export class AuthService {
       ownerId: user.userId,
       name: `${user.name}'s Wedding'`,
       users: {[user.userId]: user},
-      usersSetDefault: {[user.userId]: user}
+      usersSetDefault: {[user.userId]: true}
     });
   }
 
