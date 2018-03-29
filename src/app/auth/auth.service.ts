@@ -91,10 +91,14 @@ export class AuthService {
         .collection('weddings', ref => {
           return ref.where(`usersSetDefault.${userId}`, '==', true)
         })
-        .valueChanges()
-        .subscribe(weddings => {
-          console.log('weddings: ', weddings);
-          this.store.dispatch(new Auth.SetDefaultWedding(<Wedding> weddings[0]));
+        .stateChanges()
+        .map(items => {
+          console.log('items: ', items);
+          return { id: items[0].payload.doc.id, ...items[0].payload.doc.data() }
+        })
+        .subscribe(wedding => {
+          console.log('wedding: ', wedding);
+          this.store.dispatch(new Auth.SetDefaultWedding(<Wedding> wedding));
         })
     );
   }
