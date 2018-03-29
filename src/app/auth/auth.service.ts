@@ -109,9 +109,8 @@ export class AuthService {
     this.db.collection('weddings').add({
       ownerId: user.userId,
       name: `${user.name}'s Wedding'`,
-      active: true,
-      isDefault: true,
-      users: {[user.userId]: user}
+      users: {[user.userId]: user},
+      usersSetDefault: {[user.userId]: user}
     });
   }
 
