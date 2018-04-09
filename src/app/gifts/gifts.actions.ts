@@ -2,54 +2,43 @@ import { Action } from '@ngrx/store';
 
 import { Gift } from './gift.model';
 
-export const SET_GIFTS = '[Gifts] Set Gifts';
-export const FETCH_GIFTS = '[Gifts] Fetch Gifts';
-export const EDIT_GIFT = '[Gifts] Edit Gift';
 export const UPDATE_GIFT = '[Gifts] Update Gift';
-export const NEW_GIFT = '[Gifts] New Gift';
 export const CREATE_GIFT = '[Gifts] Create Gift';
 export const DELETE_GIFT = '[Gifts] Delete Gift';
 
-export class SetGifts implements Action {
-	readonly type = SET_GIFTS;
+export const QUERY_GIFTS = '[Gifts] Query Gifts';
+export const ADD_ALL_GIFTS = '[Gifts] Add All Gifts';
 
-	constructor(public payload: Gift[]) {}
-}
+export const SUCCESS = '[Gifts] Successful firestore write';
 
-export class FetchGifts implements Action {
-	readonly type = FETCH_GIFTS;
-
+export class QueryGifts implements Action {
+	readonly type = QUERY_GIFTS;
 	constructor(public weddingId: string, public giftType: string) {}
 }
 
-export class EditGift implements Action {
-	readonly type = EDIT_GIFT;
+export class AddAllGifts implements Action {
+	readonly type = ADD_ALL_GIFTS;
+	constructor(public gifts: Gift[]) {}
+}
 
-	constructor(public payload: Gift) {}
+export class Success implements Action {
+	readonly type = SUCCESS;
+	constructor() {}
 }
 
 export class UpdateGift implements Action {
 	readonly type = UPDATE_GIFT;
-
 	constructor(public id: string, public changes: Partial<Gift>) {}
-}
-
-export class NewGift implements Action {
-	readonly type = NEW_GIFT;
-
-	constructor(public payload: Gift) {}
 }
 
 export class CreateGift implements Action {
 	readonly type = CREATE_GIFT;
-
-	constructor(public payload: Gift) {}
+	constructor(public gift: Gift) {}
 }
 
 export class DeleteGift implements Action {
 	readonly type = DELETE_GIFT;
-
 	constructor(public id: string) {}
 }
 
-export type GiftsActions = SetGifts | FetchGifts | EditGift | UpdateGift | NewGift | CreateGift | DeleteGift;
+export type GiftsActions = QueryGifts | AddAllGifts | Success | UpdateGift | CreateGift | DeleteGift;

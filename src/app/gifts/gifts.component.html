@@ -1,9 +1,6 @@
-<pre class="">
-   userLoggedIn$: {{ userLoggedIn$ | async | json }}
-</pre>
-<pre class="">
-  defaultWedding$: {{ defaultWedding$ | async | json}}
-</pre>
+<h2>
+  {{ weddingTypes[cwi] }}
+</h2>
 
 <div class="example-container mat-elevation-z8"
   (swipeleft)="swipeTable($event.type)"
@@ -16,25 +13,64 @@
     <!-- Name Column -->
     <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.role}} </mat-cell>
+      <mat-cell *matCellDef="let row"> 
+        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <input matInput 
+            [readonly]="!row.editing" 
+            placeholder="role" 
+            [(ngModel)]="row.currentData.role">
+        </mat-form-field>
+      </mat-cell>
     </ng-container>
 
     <!-- Weight Column -->
-    <ng-container matColumnDef="giftPurchased" *ngIf="isShowLeft">
+    <ng-container matColumnDef="giftName">
       <mat-header-cell *matHeaderCellDef> Gift Purchased </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.giftPurchased}} </mat-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <input matInput [readonly]="!row.editing" placeholder="Gift Purchased" [(ngModel)]="row.currentData.giftName">
+        </mat-form-field>
+      </mat-cell>
     </ng-container>
 
     <!-- Symbol Column -->
-    <ng-container matColumnDef="amount" *ngIf="isShowRight">
+    <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount($) </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <input matInput [readonly]="!row.editing" placeholder="Amount" [(ngModel)]="row.currentData.amount">
+        </mat-form-field>
+      </mat-cell>
     </ng-container>
 
-    <!-- Position Column -->
-    <ng-container matColumnDef="position" *ngIf="isShowRight">
-      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+    <!-- note Column -->
+    <ng-container matColumnDef="note">
+      <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <input matInput [readonly]="!row.editing" placeholder="Note" [(ngModel)]="row.currentData.note">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>  
+        <button mat-icon-button color="accent" (click)="createNew()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" >
+        <button mat-icon-button color="accent" *ngIf="!row.editing" focusable="false" (click)="startEdit(row)">
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" *ngIf="row.editing" 
+          focusable="false" (click)=" confirmEditCreate(row)">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="cancelOrDelete(row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

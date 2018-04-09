@@ -6,4 +6,5 @@ export interface Gift {
 	amount: number;
 	note: string;
 	giftType: string;
+	weddingId: string;
 }

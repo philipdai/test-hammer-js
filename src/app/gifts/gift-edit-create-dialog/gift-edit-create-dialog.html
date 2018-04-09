@@ -1,0 +1,27 @@
+<h1 *ngIf="data.gift.id">Edit</h1>
+<h1 *ngIf="!data.gift.id">Create</h1>
+
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.gift.role" placeholder="Role">
+  </mat-form-field>
+</div>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.gift.giftName" placeholder="Gift Purchased">
+  </mat-form-field>
+</div>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.gift.amount" placeholder="Amount($)">
+  </mat-form-field>
+</div>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.gift.note" placeholder="Note">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="originalData">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>
