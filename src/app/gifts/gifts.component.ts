@@ -69,7 +69,6 @@ export class GiftsComponent implements OnInit {
 		});
 
 		this.gifts$.subscribe(gifts => {
-			console.log('gifts: ', gifts);
 			if (gifts.length === 0) {
 				gifts.push({
 					role: '',
@@ -115,7 +114,7 @@ export class GiftsComponent implements OnInit {
 			amount,
 			note,
 			weddingId: this.defaultWeddingId,
-			giftType: this.defaultGiftType,
+			giftType: this.weddingTypes[this.cwi],
 		};
 
 		this.store.dispatch(new actions.CreateGift(giftData));
