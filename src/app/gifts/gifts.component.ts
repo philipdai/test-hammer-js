@@ -35,7 +35,8 @@ export class GiftsComponent implements OnInit {
 
 	isShowLeft = true;
 	isShowRight = false;
-	displayedColumns = [ 'role', 'giftName', 'amount', 'note', 'actions' ];
+	// displayedColumns = [ 'role', 'who', 'giftName', 'amount', 'note', 'actions' ];
+	displayedColumns = [ 'role', 'who', 'giftName', 'amount', 'actions' ];
 
 	dataSource: TableDataSource<Gift>;
 
@@ -72,6 +73,7 @@ export class GiftsComponent implements OnInit {
 			if (gifts.length === 0) {
 				gifts.push({
 					role: '',
+					who: '',
 					giftName: '',
 					amount: 0,
 					note: '',
@@ -92,7 +94,7 @@ export class GiftsComponent implements OnInit {
 	}
 
 	createNew() {
-		this.openDialog({ gift: { role: '', giftName: '', amount: 0, note: '' }, row: null });
+		this.openDialog({ gift: { role: '', who: '', giftName: '', amount: 0, note: '' }, row: null });
 	}
 
 	confirmEditCreate(row) {

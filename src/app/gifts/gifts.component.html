@@ -1,4 +1,4 @@
-<h2>
+<h2 class="gift-title">
   {{ weddingTypes[cwi] }}
 </h2>
 
@@ -10,7 +10,7 @@
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
-    <!-- Name Column -->
+    <!-- Role Column -->
     <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
       <mat-cell *matCellDef="let row"> 
@@ -23,7 +23,20 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- Who Column -->
+    <ng-container matColumnDef="who">
+      <mat-header-cell *matHeaderCellDef> Who </mat-header-cell>
+      <mat-cell *matCellDef="let row"> 
+        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <input matInput 
+            [readonly]="!row.editing" 
+            placeholder="who" 
+            [(ngModel)]="row.currentData.who">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Gift Name Column -->
     <ng-container matColumnDef="giftName">
       <mat-header-cell *matHeaderCellDef> Gift Purchased </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -33,7 +46,7 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Symbol Column -->
+    <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount($) </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -43,23 +56,23 @@
       </mat-cell>
     </ng-container>
 
-    <!-- note Column -->
-    <ng-container matColumnDef="note">
+    <!-- Note Column -->
+    <!-- <ng-container matColumnDef="note">
       <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
           <input matInput [readonly]="!row.editing" placeholder="Note" [(ngModel)]="row.currentData.note">
         </mat-form-field>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>  
+      <mat-header-cell *matHeaderCellDef class="action-header">  
         <button mat-icon-button color="accent" (click)="createNew()">
           <mat-icon>add</mat-icon>
         </button>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row" >
+      <mat-cell *matCellDef="let row" class="action-cell">
         <button mat-icon-button color="accent" *ngIf="!row.editing" focusable="false" (click)="startEdit(row)">
           <mat-icon>mode_edit</mat-icon>
         </button>
