@@ -1,0 +1,31 @@
+<form (submit)="submit()" [formGroup]="form">
+  <div>
+    <mat-form-field>
+      <input matInput formControlName="role" placeholder="Role">
+    </mat-form-field>
+  </div>
+  <div >
+    <mat-form-field>
+      <input matInput formControlName="who" placeholder="Who">
+    </mat-form-field>
+  </div>
+  <div >
+    <mat-form-field>
+      <input matInput formControlName="giftName" placeholder="Gift Purchased">
+    </mat-form-field>
+  </div>
+  <div >
+    <mat-form-field>
+      <input matInput formControlName="amount" placeholder="Amount($)">
+    </mat-form-field>
+  </div>
+  <div >
+    <mat-form-field>
+      <input matInput formControlName="note" placeholder="Note">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [routerLink]="['/gifts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Cancel</button>
+    <button mat-button type="submit" [disabled]="!form.valid" cdkFocusInitial>Save</button>
+  </div>
+</form>

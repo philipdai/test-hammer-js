@@ -68,7 +68,10 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef class="action-header">  
-        <button mat-icon-button color="accent" (click)="createNew()">
+        <!-- <button mat-icon-button color="accent" (click)="createNew()">
+          <mat-icon>add</mat-icon>
+        </button> -->
+        <button mat-icon-button color="accent" [routerLink]="['/gifts', 'new']" routerLinkActive="active">
           <mat-icon>add</mat-icon>
         </button>
       </mat-header-cell>

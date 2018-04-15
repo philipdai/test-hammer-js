@@ -7,7 +7,9 @@ import { GiftsEffects } from './gifts.effects';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { GiftsComponent } from './gifts.component';
+import { GiftNewComponent } from './gift-new/gift-new.component';
 import { GiftEditCreateDialog } from './gift-edit-create-dialog/gift-edit-create-dialog.component';
+import { GiftFormComponent } from './gift-form/gift-form.component';
 import { GiftsRoutingModule } from './gifts-routing.module';
 import { giftsReducer } from './gifts.reducer';
 
@@ -21,7 +23,7 @@ import { giftsReducer } from './gifts.reducer';
 		StoreModule.forFeature('gifts', giftsReducer),
 		EffectsModule.forFeature([ GiftsEffects ]),
 	],
-	declarations: [ GiftsComponent, GiftEditCreateDialog ],
-	entryComponents: [ GiftEditCreateDialog ],
+	declarations: [ GiftsComponent, GiftNewComponent, GiftEditCreateDialog, GiftFormComponent ],
+	entryComponents: [ GiftNewComponent, GiftEditCreateDialog, GiftFormComponent ],
 })
 export class GiftsModule {}

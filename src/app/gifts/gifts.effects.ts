@@ -42,40 +42,54 @@ export class GiftsEffects {
 			return new actions.AddAllGifts(arr);
 		});
 
+	// @Effect()
+	// createGift$: Observable<Action> = this.actions$
+	// 	.ofType(actions.CREATE_GIFT)
+	// 	.map((action: actions.CreateGift) => action.gift)
+	// 	.switchMap(gift => {
+	// 		const ref = this.afs.doc<Gift>(`gifts/${gift.id}`);
+	// 		return Observable.fromPromise(ref.set(gift)).map(() => {
+	// 			console.log('gift: ', gift);
+	// 			return new actions.Success(gift);
+	// 		});
+	// 	});
+
 	@Effect()
 	createGift$: Observable<Action> = this.actions$
 		.ofType(actions.CREATE_GIFT)
-		.map((action: actions.CreateGift) => action.gift)
-		.switchMap(gift => {
-			// console.log('gift ===>', gift);
-			const ref = this.afs.doc<Gift>(`gifts/${gift.id}`);
-			return Observable.fromPromise(ref.set(gift));
+		.map((action: actions.CreateGift) => {
+			console.log('action ===> ', action);
+			return action.gift;
 		})
-		.map(() => {
-			return new actions.Success();
+		.switchMap(gift => {
+			const ref = this.afs.collection(`gifts`);
+			return Observable.fromPromise(ref.add(gift)).map(() => {
+				console.log('gift: ', gift);
+				return new actions.Success(gift);
+			});
 		});
 
 	@Effect()
 	upateGift$: Observable<Action> = this.actions$
 		.ofType(actions.UPDATE_GIFT)
 		.map((action: actions.UpdateGift) => action)
-		.switchMap(data => {
+		.switchMap((data: any) => {
 			const ref = this.afs.doc<Gift>(`gifts/${data.id}`);
-			return Observable.fromPromise(ref.update(data.changes));
-		})
-		.map(() => {
-			return new actions.Success();
+			return Observable.fromPromise(ref.update(data.changes)).map(() => {
+				console.log('data:', data);
+				return new actions.Success(data);
+			});
 		});
 
 	@Effect()
 	deleteGift$: Observable<Action> = this.actions$
 		.ofType(actions.DELETE_GIFT)
-		.map((action: actions.DeleteGift) => action.id)
-		.switchMap(id => {
-			const ref = this.afs.doc<Gift>(`gifts/${id}`);
-			return Observable.fromPromise(ref.delete());
-		})
-		.map(() => {
-			return new actions.Success();
+		.map((action: actions.DeleteGift) => action)
+		.switchMap((deletedGift: any) => {
+			const ref = this.afs.doc<Gift>(`gifts/${deletedGift.id}`);
+			return Observable.fromPromise(ref.delete()).map(() => {
+				console.log('deletedGift: ', deletedGift);
+				return new actions.Success(deletedGift);
+			});
 		});
 }

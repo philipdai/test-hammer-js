@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { merge } from 'rxjs/observable/merge';
 import * as actions from './gifts.actions';
 import * as fromGifts from './gifts.reducer';
+import * as sharedActions from '../shared/shared.actions';
+import * as fromShared from '../shared/shared.reducer';
 import { TableDataSource, ValidatorService } from 'angular4-material-table';
 import { MatDialog } from '@angular/material';
 
@@ -28,7 +30,7 @@ export class GiftsComponent implements OnInit {
 	cwi: number = 0;
 
 	constructor(
-		private store: Store<fromAuth.State | fromGifts.State>,
+		private store: Store<fromAuth.State | fromGifts.State | fromShared.State>,
 		private authService: AuthService,
 		public dialog: MatDialog
 	) {}
@@ -61,13 +63,17 @@ export class GiftsComponent implements OnInit {
 		this.defaultWedding$.subscribe(defaultWedding => {
 			this.gifts$ = this.store.select(fromGifts.selectAll);
 			if (defaultWedding) {
+				console.log('defaultWedding: ', defaultWedding);
 				this.defaultWeddingId = defaultWedding.id;
 				this.defaultGiftType = 'Parents, Relatives, Bride & Groom';
 				this.store.dispatch(
 					new actions.QueryGifts(defaultWedding.id, this.weddingTypes[this.currentWeddingTypeIndex])
 				);
+				this.store.dispatch(new sharedActions.SetCurrentWeddingId(defaultWedding.id));
 			}
 		});
+
+		this.store.dispatch(new sharedActions.SetCurrentGiftType(this.weddingTypes[this.cwi]));
 
 		this.gifts$.subscribe(gifts => {
 			if (gifts.length === 0) {
@@ -166,6 +172,7 @@ export class GiftsComponent implements OnInit {
 				: 3 + this.currentWeddingTypeIndex % 3;
 		console.log('this.cwi: ', this.cwi);
 		this.store.dispatch(new actions.QueryGifts(this.defaultWeddingId, this.weddingTypes[this.cwi]));
+		this.store.dispatch(new sharedActions.SetCurrentGiftType(this.weddingTypes[this.cwi]));
 	}
 
 	openDialog(data): void {

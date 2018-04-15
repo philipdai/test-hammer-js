@@ -23,7 +23,7 @@ export class AddAllGifts implements Action {
 
 export class Success implements Action {
 	readonly type = SUCCESS;
-	constructor() {}
+	constructor(public payload: Gift) {}
 }
 
 export class UpdateGift implements Action {

@@ -29,8 +29,6 @@ const initialState: State = giftAdapter.getInitialState(defaultGift);
 export function giftsReducer(state = initialState, action: actions.GiftsActions) {
 	switch (action.type) {
 		case actions.ADD_ALL_GIFTS: {
-			// console.log('state: ', state);
-			// console.log('action: ', action);
 			return giftAdapter.addAll(action.gifts, state);
 		}
 
