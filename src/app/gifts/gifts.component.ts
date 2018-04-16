@@ -15,6 +15,7 @@ import * as fromAuth from '../auth/auth.reducer';
 import { AuthService } from '../auth/auth.service';
 import { Gift } from './gift.model';
 import { GiftEditCreateDialog } from './gift-edit-create-dialog/gift-edit-create-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'app-gifts',
@@ -32,7 +33,8 @@ export class GiftsComponent implements OnInit {
 	constructor(
 		private store: Store<fromAuth.State | fromGifts.State | fromShared.State>,
 		private authService: AuthService,
-		public dialog: MatDialog
+		public dialog: MatDialog,
+		private router: Router
 	) {}
 
 	isShowLeft = true;
@@ -63,7 +65,6 @@ export class GiftsComponent implements OnInit {
 		this.defaultWedding$.subscribe(defaultWedding => {
 			this.gifts$ = this.store.select(fromGifts.selectAll);
 			if (defaultWedding) {
-				console.log('defaultWedding: ', defaultWedding);
 				this.defaultWeddingId = defaultWedding.id;
 				this.defaultGiftType = 'Parents, Relatives, Bride & Groom';
 				this.store.dispatch(
@@ -95,8 +96,9 @@ export class GiftsComponent implements OnInit {
 	}
 
 	startEdit(row) {
-		this.openDialog({ gift: row.currentData, row: row });
 		row.startEdit();
+		this.store.dispatch(new actions.SetCurrentGift(row.currentData));
+		this.router.navigate([ '/gifts', row.currentData.id, 'edit' ]);
 	}
 
 	createNew() {

@@ -1,0 +1,8 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Edit Gift</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <btv-gift-form [gift]="gift$ | async" (onSubmit)="submitted($event)"></btv-gift-form>
+  </mat-card-content>
+</mat-card>

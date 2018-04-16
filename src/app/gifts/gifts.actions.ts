@@ -8,8 +8,16 @@ export const DELETE_GIFT = '[Gifts] Delete Gift';
 
 export const QUERY_GIFTS = '[Gifts] Query Gifts';
 export const ADD_ALL_GIFTS = '[Gifts] Add All Gifts';
+export const SET_CURRENT_GIFT = '[Gifts] Set Current Gift';
+export const LOAD = '[Gifts] LOAD';
+export const LOAD_SUCCESS = '[Gifts] LOAD SUCCESS';
 
 export const SUCCESS = '[Gifts] Successful firestore write';
+
+export class SetCurrentGift implements Action {
+	readonly type = SET_CURRENT_GIFT;
+	constructor(public payload: Gift) {}
+}
 
 export class QueryGifts implements Action {
 	readonly type = QUERY_GIFTS;
@@ -19,6 +27,16 @@ export class QueryGifts implements Action {
 export class AddAllGifts implements Action {
 	readonly type = ADD_ALL_GIFTS;
 	constructor(public gifts: Gift[]) {}
+}
+
+export class Load implements Action {
+	readonly type = LOAD;
+	constructor(public payload: string) {}
+}
+
+export class LoadSuccess implements Action {
+	readonly type = LOAD_SUCCESS;
+	constructor(public payload: Gift) {}
 }
 
 export class Success implements Action {
@@ -41,4 +59,13 @@ export class DeleteGift implements Action {
 	constructor(public id: string) {}
 }
 
-export type GiftsActions = QueryGifts | AddAllGifts | Success | UpdateGift | CreateGift | DeleteGift;
+export type GiftsActions =
+	| QueryGifts
+	| AddAllGifts
+	| Success
+	| UpdateGift
+	| CreateGift
+	| DeleteGift
+	| SetCurrentGift
+	| Load
+	| LoadSuccess;

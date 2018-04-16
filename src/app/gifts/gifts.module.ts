@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 
 import { GiftsComponent } from './gifts.component';
 import { GiftNewComponent } from './gift-new/gift-new.component';
+import { GiftEditComponent } from './gift-edit/gift-edit.component';
 import { GiftEditCreateDialog } from './gift-edit-create-dialog/gift-edit-create-dialog.component';
 import { GiftFormComponent } from './gift-form/gift-form.component';
 import { GiftsRoutingModule } from './gifts-routing.module';
@@ -23,7 +24,7 @@ import { giftsReducer } from './gifts.reducer';
 		StoreModule.forFeature('gifts', giftsReducer),
 		EffectsModule.forFeature([ GiftsEffects ]),
 	],
-	declarations: [ GiftsComponent, GiftNewComponent, GiftEditCreateDialog, GiftFormComponent ],
-	entryComponents: [ GiftNewComponent, GiftEditCreateDialog, GiftFormComponent ],
+	declarations: [ GiftsComponent, GiftNewComponent, GiftEditComponent, GiftEditCreateDialog, GiftFormComponent ],
+	entryComponents: [ GiftNewComponent, GiftEditComponent, GiftEditCreateDialog, GiftFormComponent ],
 })
 export class GiftsModule {}

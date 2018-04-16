@@ -44,13 +44,11 @@ export class GiftFormComponent implements OnInit, OnChanges {
 	ngOnInit() {
 		this.currentWeddingId$ = this.store.select(fromShared.getCurrentWeddingId);
 		this.currentWeddingId$.subscribe(currentWeddingId => {
-			console.log('currentWeddingId: ', currentWeddingId);
 			this.gift.weddingId = currentWeddingId;
 		});
 
 		this.currentGiftType$ = this.store.select(fromShared.getCurrentGiftType);
 		this.currentGiftType$.subscribe(currentGiftType => {
-			console.log('currentGiftType: ', currentGiftType);
 			this.gift.giftType = currentGiftType;
 		});
 	}
@@ -68,8 +66,9 @@ export class GiftFormComponent implements OnInit, OnChanges {
 			this.gift.who = this.form.value.who;
 			this.gift.amount = this.form.value.amount;
 			this.gift.note = this.form.value.note;
-			delete this.gift.id;
-			console.log('this.gift: ', this.gift);
+			if (this.gift.id === undefined) {
+				delete this.gift.id;
+			}
 			this.onSubmit.emit(this.gift);
 		}
 	}

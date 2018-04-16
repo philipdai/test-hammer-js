@@ -58,13 +58,11 @@ export class GiftsEffects {
 	createGift$: Observable<Action> = this.actions$
 		.ofType(actions.CREATE_GIFT)
 		.map((action: actions.CreateGift) => {
-			console.log('action ===> ', action);
 			return action.gift;
 		})
 		.switchMap(gift => {
 			const ref = this.afs.collection(`gifts`);
 			return Observable.fromPromise(ref.add(gift)).map(() => {
-				console.log('gift: ', gift);
 				return new actions.Success(gift);
 			});
 		});
@@ -76,7 +74,6 @@ export class GiftsEffects {
 		.switchMap((data: any) => {
 			const ref = this.afs.doc<Gift>(`gifts/${data.id}`);
 			return Observable.fromPromise(ref.update(data.changes)).map(() => {
-				console.log('data:', data);
 				return new actions.Success(data);
 			});
 		});
@@ -88,7 +85,6 @@ export class GiftsEffects {
 		.switchMap((deletedGift: any) => {
 			const ref = this.afs.doc<Gift>(`gifts/${deletedGift.id}`);
 			return Observable.fromPromise(ref.delete()).map(() => {
-				console.log('deletedGift: ', deletedGift);
 				return new actions.Success(deletedGift);
 			});
 		});
