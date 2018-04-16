@@ -26,6 +26,7 @@ export class GiftsComponent implements OnInit {
 	userLoggedIn$: Observable<User>;
 	defaultWedding$: Observable<Wedding>;
 	gifts$: Observable<any>;
+	currentGift$: Observable<Gift>;
 	defaultWeddingId: string;
 	defaultGiftType: string;
 	cwi: number = 0;
@@ -39,7 +40,6 @@ export class GiftsComponent implements OnInit {
 
 	isShowLeft = true;
 	isShowRight = false;
-	// displayedColumns = [ 'role', 'who', 'giftName', 'amount', 'note', 'actions' ];
 	displayedColumns = [ 'role', 'who', 'giftName', 'amount', 'actions' ];
 
 	dataSource: TableDataSource<Gift>;
@@ -62,14 +62,19 @@ export class GiftsComponent implements OnInit {
 			this.authService.getLocalDefaultWedding()
 		);
 
+		this.currentGift$ = this.store.select(fromGifts.getCurrentGift);
+		this.currentGift$.subscribe(currentGift => {
+			if (currentGift) {
+				this.cwi = this.weddingTypes.indexOf(currentGift.giftType);
+			}
+		});
+
 		this.defaultWedding$.subscribe(defaultWedding => {
 			this.gifts$ = this.store.select(fromGifts.selectAll);
 			if (defaultWedding) {
 				this.defaultWeddingId = defaultWedding.id;
 				this.defaultGiftType = 'Parents, Relatives, Bride & Groom';
-				this.store.dispatch(
-					new actions.QueryGifts(defaultWedding.id, this.weddingTypes[this.currentWeddingTypeIndex])
-				);
+				this.store.dispatch(new actions.QueryGifts(defaultWedding.id, this.weddingTypes[this.cwi]));
 				this.store.dispatch(new sharedActions.SetCurrentWeddingId(defaultWedding.id));
 			}
 		});
@@ -102,7 +107,19 @@ export class GiftsComponent implements OnInit {
 	}
 
 	createNew() {
-		this.openDialog({ gift: { role: '', who: '', giftName: '', amount: 0, note: '' }, row: null });
+		// this.openDialog({ gift: { role: '', who: '', giftName: '', amount: 0, note: '' }, row: null });
+		let currentGift = {
+			id: undefined,
+			role: '',
+			who: '',
+			giftName: '',
+			amount: 0,
+			note: '',
+			weddingId: this.defaultWeddingId,
+			giftType: this.weddingTypes[this.cwi],
+		};
+		this.store.dispatch(new actions.SetCurrentGift(currentGift));
+		this.router.navigate([ '/gifts', 'new' ]);
 	}
 
 	confirmEditCreate(row) {
@@ -153,7 +170,7 @@ export class GiftsComponent implements OnInit {
 	}
 
 	swipeTable(action: string = this.SWIPE_ACTION.RIGHT) {
-		console.log(action);
+		// console.log(action);
 		if (action === 'swipeleft') {
 			this.currentWeddingTypeIndex++;
 		}
@@ -162,17 +179,17 @@ export class GiftsComponent implements OnInit {
 			this.currentWeddingTypeIndex--;
 		}
 
-		console.log('this.currentWeddingTypeIndex % 3: ', this.currentWeddingTypeIndex % 3);
-		console.log(
-			'this.weddingTypes[this.currentWeddingTypeIndex % 3]: ',
-			this.weddingTypes[this.currentWeddingTypeIndex % 3]
-		);
+		// console.log('this.currentWeddingTypeIndex % 3: ', this.currentWeddingTypeIndex % 3);
+		// console.log(
+		// 	'this.weddingTypes[this.currentWeddingTypeIndex % 3]: ',
+		// 	this.weddingTypes[this.currentWeddingTypeIndex % 3]
+		// );
 
 		this.cwi =
 			this.currentWeddingTypeIndex % 3 >= 0
 				? this.currentWeddingTypeIndex % 3
 				: 3 + this.currentWeddingTypeIndex % 3;
-		console.log('this.cwi: ', this.cwi);
+
 		this.store.dispatch(new actions.QueryGifts(this.defaultWeddingId, this.weddingTypes[this.cwi]));
 		this.store.dispatch(new sharedActions.SetCurrentGiftType(this.weddingTypes[this.cwi]));
 	}
