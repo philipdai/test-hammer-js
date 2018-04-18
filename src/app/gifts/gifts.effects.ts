@@ -23,12 +23,9 @@ export class GiftsEffects {
 			const ref = this.afs.collection<Gift>('gifts', ref => {
 				return ref.where('weddingId', '==', fData.weddingId).where('giftType', '==', fData.giftType);
 			});
-			// console.log('ref: ', ref);
 
 			return ref.snapshotChanges().map(arr => {
-				// console.log('arr 2: ', arr);
 				return arr.map(doc => {
-					// console.log('doc: ', doc);
 					const data = doc.payload.doc.data();
 					return {
 						id: doc.payload.doc.id,
@@ -38,21 +35,8 @@ export class GiftsEffects {
 			});
 		})
 		.map(arr => {
-			// console.log('arr: ', arr);
 			return new actions.AddAllGifts(arr);
 		});
-
-	// @Effect()
-	// createGift$: Observable<Action> = this.actions$
-	// 	.ofType(actions.CREATE_GIFT)
-	// 	.map((action: actions.CreateGift) => action.gift)
-	// 	.switchMap(gift => {
-	// 		const ref = this.afs.doc<Gift>(`gifts/${gift.id}`);
-	// 		return Observable.fromPromise(ref.set(gift)).map(() => {
-	// 			console.log('gift: ', gift);
-	// 			return new actions.Success(gift);
-	// 		});
-	// 	});
 
 	@Effect()
 	createGift$: Observable<Action> = this.actions$
