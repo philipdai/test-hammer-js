@@ -12,19 +12,26 @@
 
     <!-- Role Column -->
     <ng-container matColumnDef="role">
-      <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
-      <mat-cell *matCellDef="let row"> 
-        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
-          <input matInput 
-            [readonly]="!row.editing" 
-            placeholder="role" 
-            [(ngModel)]="row.currentData.role">
-        </mat-form-field>
+      <mat-header-cell *matHeaderCellDef> Role / Who</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div>
+          Role:
+          <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+            <input matInput [readonly]="!row.editing" placeholder="role" [(ngModel)]="row.currentData.role">
+          </mat-form-field>
+        </div> 
+        <div>
+          Who:
+          <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+            <input matInput [readonly]="!row.editing" placeholder="who" [(ngModel)]="row.currentData.who">
+          </mat-form-field>
+        </div>
+        
       </mat-cell>
     </ng-container>
 
     <!-- Who Column -->
-    <ng-container matColumnDef="who">
+    <!-- <ng-container matColumnDef="who">
       <mat-header-cell *matHeaderCellDef> Who </mat-header-cell>
       <mat-cell *matCellDef="let row"> 
         <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
@@ -34,11 +41,11 @@
             [(ngModel)]="row.currentData.who">
         </mat-form-field>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Gift Name Column -->
     <ng-container matColumnDef="giftName">
-      <mat-header-cell *matHeaderCellDef> Gift Purchased </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Gift </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
           <input matInput [readonly]="!row.editing" placeholder="Gift Purchased" [(ngModel)]="row.currentData.giftName">
@@ -56,24 +63,11 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Note Column -->
-    <!-- <ng-container matColumnDef="note">
-      <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
-          <input matInput [readonly]="!row.editing" placeholder="Note" [(ngModel)]="row.currentData.note">
-        </mat-form-field>
-      </mat-cell>
-    </ng-container> -->
-
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef class="action-header">  
         <button mat-icon-button color="accent" (click)="createNew()">
           <mat-icon>add</mat-icon>
         </button>
-        <!-- <button mat-icon-button color="accent" [routerLink]="['/gifts', 'new']" routerLinkActive="active">
-          <mat-icon>add</mat-icon>
-        </button> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" class="action-cell">
         <button mat-icon-button color="accent" *ngIf="!row.editing" focusable="false" (click)="startEdit(row)">

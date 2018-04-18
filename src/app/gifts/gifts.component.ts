@@ -40,7 +40,7 @@ export class GiftsComponent implements OnInit {
 
 	isShowLeft = true;
 	isShowRight = false;
-	displayedColumns = [ 'role', 'who', 'giftName', 'amount', 'actions' ];
+	displayedColumns = [ 'role', 'giftName', 'amount', 'actions' ];
 
 	dataSource: TableDataSource<Gift>;
 
