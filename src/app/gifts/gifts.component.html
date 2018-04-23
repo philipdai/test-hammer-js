@@ -45,7 +45,7 @@
 
     <!-- Gift Name Column -->
     <ng-container matColumnDef="giftName">
-      <mat-header-cell *matHeaderCellDef> Gift </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Gift Purchased </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
           <input matInput [readonly]="!row.editing" placeholder="Gift Purchased" [(ngModel)]="row.currentData.giftName">
@@ -73,11 +73,11 @@
         <button mat-icon-button color="accent" *ngIf="!row.editing" focusable="false" (click)="startEdit(row)">
           <mat-icon>mode_edit</mat-icon>
         </button>
-        <button mat-icon-button color="accent" *ngIf="row.editing" 
+        <!-- <button mat-icon-button color="accent" *ngIf="row.editing" 
           focusable="false" (click)=" confirmEditCreate(row)">
           <mat-icon>check</mat-icon>
-        </button>
-        <button mat-icon-button color="accent" (click)="cancelOrDelete(row)">
+        </button> -->
+        <button mat-icon-button color="accent" (click)="openDeleteConfirmDialog(row)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>

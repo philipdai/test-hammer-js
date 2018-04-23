@@ -24,7 +24,7 @@
       <input matInput formControlName="note" placeholder="Note">
     </mat-form-field>
   </div>
-  <div mat-dialog-actions>
+  <div>
     <button mat-button [routerLink]="['/gifts']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Cancel</button>
     <button mat-button type="submit" [disabled]="!form.valid" cdkFocusInitial>Save</button>
   </div>

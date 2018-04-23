@@ -44,3 +44,7 @@
 .mat-table {
 	padding: 10px;
 }
+
+button.mat-icon-button {
+	width: 70%;
+}

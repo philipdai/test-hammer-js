@@ -15,6 +15,7 @@ import * as fromAuth from '../auth/auth.reducer';
 import { AuthService } from '../auth/auth.service';
 import { Gift } from './gift.model';
 import { GiftEditCreateDialog } from './gift-edit-create-dialog/gift-edit-create-dialog.component';
+import { GiftDeleteConfirmDialog } from './gift-delete-confirm-dialog/gift-delete-confirm-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -194,18 +195,14 @@ export class GiftsComponent implements OnInit {
 		this.store.dispatch(new sharedActions.SetCurrentGiftType(this.weddingTypes[this.cwi]));
 	}
 
-	openDialog(data): void {
-		let dialogRef = this.dialog.open(GiftEditCreateDialog, {
+	openDeleteConfirmDialog(row): void {
+		let dialogRef = this.dialog.open(GiftDeleteConfirmDialog, {
 			width: '250px',
-			data: data,
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			if (result && result.row) {
-				this.confirmEditCreate(result.row);
-			}
-			if (result && !result.row && checkCancel(result)) {
-				this.createGift({ ...result.gift });
+			if (result === 'yes') {
+				this.deleteGift(row.currentData.id);
 			}
 		});
 	}
