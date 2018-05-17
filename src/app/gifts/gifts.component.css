@@ -48,3 +48,11 @@
 button.mat-icon-button {
 	width: 70%;
 }
+
+.who {
+	bottom: 28px;
+}
+
+/deep/ .role .mat-form-field-underline {
+	display: none;
+}

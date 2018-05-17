@@ -14,15 +14,13 @@
     <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef> Role / Who</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <div>
-          Role:
+        <div class="role">
           <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
             <input matInput [readonly]="!row.editing" placeholder="role" [(ngModel)]="row.currentData.role">
           </mat-form-field>
         </div> 
         <div>
-          Who:
-          <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}">
+          <mat-form-field floatPlaceholder="{{ row.editing ? 'float' : 'never'}}" class="who">
             <input matInput [readonly]="!row.editing" placeholder="who" [(ngModel)]="row.currentData.who">
           </mat-form-field>
         </div>
