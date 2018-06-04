@@ -47,8 +47,6 @@ export class GiftsComponent implements OnInit {
 
 	SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
 
-	animal: string = 'Cat';
-	name: string = 'Beibei';
 	weddingTypes: string[] = [ 'Parents, Relatives, Bride & Groom', 'Bridal Party', 'Ceremony Attendants' ];
 	currentWeddingTypeIndex = 0;
 	defaultWedding: any;
@@ -58,6 +56,7 @@ export class GiftsComponent implements OnInit {
 			this.store.select(fromAuth.getUserLoggedIn),
 			this.authService.getLocalUserLoggedIn()
 		);
+		
 		this.defaultWedding$ = merge(
 			this.store.select(fromAuth.getDefaultWedding),
 			this.authService.getLocalDefaultWedding()
@@ -108,7 +107,6 @@ export class GiftsComponent implements OnInit {
 	}
 
 	createNew() {
-		// this.openDialog({ gift: { role: '', who: '', giftName: '', amount: 0, note: '' }, row: null });
 		let currentGift = {
 			id: undefined,
 			role: '',
@@ -179,12 +177,6 @@ export class GiftsComponent implements OnInit {
 		if (action === 'swiperight') {
 			this.currentWeddingTypeIndex--;
 		}
-
-		// console.log('this.currentWeddingTypeIndex % 3: ', this.currentWeddingTypeIndex % 3);
-		// console.log(
-		// 	'this.weddingTypes[this.currentWeddingTypeIndex % 3]: ',
-		// 	this.weddingTypes[this.currentWeddingTypeIndex % 3]
-		// );
 
 		this.cwi =
 			this.currentWeddingTypeIndex % 3 >= 0
